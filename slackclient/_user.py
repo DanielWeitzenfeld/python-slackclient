@@ -16,7 +16,12 @@ class User(object):
         data = ""
         for key in list(self.__dict__.keys()):
             if key != "server":
-                data += "{} : {}\n".format(key, str(self.__dict__[key])[:40])
+                encoded_key = key.encode('ascii', errors='ignore')
+                if self.__dict__[key]:
+                    encoded_val = self.__dict__[key].encode('ascii', errors='ignore')
+                else:
+                    encoded_val = ''
+                data += "{} : {}\n".format(encoded_key, encoded_val[:40])
         return data
 
     def __repr__(self):
